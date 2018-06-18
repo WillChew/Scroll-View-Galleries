@@ -7,6 +7,7 @@
 //
 
 #import "SecondViewController.h"
+#import "ViewController.h"
 
 
 @interface SecondViewController () <UIScrollViewDelegate>
@@ -21,12 +22,13 @@
     [super viewDidLoad];
     [self setupScrollView];
     [self setupZooming];
+   
 }
 
 -(void)setupScrollView {
     UIScrollView *sv = [[UIScrollView alloc]init];
     sv.delegate = self;
-    sv.pagingEnabled = YES;
+//    sv.pagingEnabled = YES;
     [self.view addSubview:sv];
     self.scrollView = sv;
     sv.translatesAutoresizingMaskIntoConstraints = NO;
@@ -36,7 +38,7 @@
     [sv.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
     [sv.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
     
-    UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Lighthouse-zoomed.jpg"]];
+    UIImageView *imageView = [[UIImageView alloc]init];
     imageView.clipsToBounds = YES;
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     
@@ -60,4 +62,7 @@
     UIImageView *image = [scrollView viewWithTag:1];
     return image;
 }
+
+
+
 @end

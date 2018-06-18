@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "SecondViewController.h"
 
 @interface ViewController () <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -18,12 +19,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupScrollView];
+    
 }
 
 -(void)setupScrollView {
     [self.view addSubview:self.scrollView];
     self.scrollView.delegate = self;
-    
     self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
     
     //setting scrollview constraints
@@ -37,15 +38,20 @@
     UIImageView *iv1 = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Lighthouse-zoomed.jpg"]];
     iv1.clipsToBounds = YES;
     iv1.contentMode = UIViewContentModeScaleAspectFill;
+    iv1.userInteractionEnabled = YES;
+    iv1.tag = 1;
     
     UIImageView *iv2 = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Lighthouse-night.jpg"]];
     iv2.clipsToBounds = YES;
     iv2.contentMode = UIViewContentModeScaleAspectFill;
-    
+    iv2.userInteractionEnabled = YES;
+    iv2.tag = 2;
     
     UIImageView *iv3 = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Lighthouse-in-Field.jpg"]];
     iv3.clipsToBounds = YES;
-    iv3.contentMode = UIViewContentModeScaleToFill;
+    iv3.contentMode = UIViewContentModeScaleAspectFill;
+    iv3.userInteractionEnabled = YES;
+    iv3.tag = 3;
     
     [self.scrollView addSubview:iv1];
     iv1.translatesAutoresizingMaskIntoConstraints = NO;
@@ -85,8 +91,53 @@
     [iv3.trailingAnchor constraintEqualToAnchor:self.scrollView.trailingAnchor].active = YES;
     
     
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(screenTapped:)];
+    [iv1 addGestureRecognizer:tapGesture];
+    [iv2 addGestureRecognizer:tapGesture];
+    [iv3 addGestureRecognizer:tapGesture];
+    [self.scrollView addGestureRecognizer:tapGesture];
+    
 }
 
+-(void)screenTapped:(UIGestureRecognizer*)sender {
+    [self performSegueWithIdentifier:@"galleryToDetail" sender:sender.view];
+    [self prepareForSegue:<#(nonnull UIStoryboardSegue *)#> sender:<#(nullable id)#>]
+  
+}
+
+//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    SecondViewController *svc = (SecondViewController*)segue.destinationViewController;
+//    NSLog(@"%@", segue.identifier);
+//    [segue.destinationViewController setView:self.view];
+//
+//}
+
+//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+//    if (self.scrollView.contentOffset.x == 0) {
+//        NSLog(@"1");
+//        [self performSegueWithIdentifier:@"galleryToDetail" sender:self];
+//
+//    }
+//    if (self.scrollView.contentOffset.x == 414) {
+//        [self performSegueWithIdentifier:@"galleryToDetail" sender:self];
+//        NSLog(@"2");
+//    }
+//    else if (self.scrollView.contentOffset.x >= 828){
+//        [self performSegueWithIdentifier:@"galleryToDetail" sender:self];
+//        NSLog(@"3");
+//    }
+//}
+
+
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    NSLog(@"Line: %d, function : %s", __LINE__, __PRETTY_FUNCTION__);
+//
+//}
+
+//- (void)scrollViewDidChangeAdjustedContentInset:(UIScrollView *)scrollView {
+//    NSLog(@"Line: %d, function : %s", __LINE__, __PRETTY_FUNCTION__);
+//
+//}
 
 
 
