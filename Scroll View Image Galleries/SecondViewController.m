@@ -8,7 +8,10 @@
 
 #import "SecondViewController.h"
 
-@interface SecondViewController ()
+
+@interface SecondViewController () <UIScrollViewDelegate>
+
+@property (nonatomic, weak) UIScrollView *scrollView;
 
 @end
 
@@ -16,22 +19,37 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self setupScrollView];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)setupScrollView {
+    UIScrollView *sv = [[UIScrollView alloc]init];
+    sv.delegate = self;
+    sv.pagingEnabled = YES;
+    [self.view addSubview:sv];
+    self.scrollView = sv;
+    sv.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [sv.topAnchor constraintEqualToAnchor:self.view.topAnchor].active = YES;
+    [sv.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+    [sv.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
+    [sv.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
+    
+    UIImageView *imageView = [[UIImageView alloc]init];
+    
+    imageView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.scrollView addSubview:imageView];
+    
+    [imageView.topAnchor constraintEqualToAnchor:self.scrollView.topAnchor].active = YES;
+    [imageView.bottomAnchor constraintEqualToAnchor:self.scrollView.bottomAnchor].active = YES;
+    [imageView.leadingAnchor constraintEqualToAnchor:self.scrollView.leadingAnchor].active = YES;
+    [imageView.trailingAnchor constraintEqualToAnchor:self.scrollView.trailingAnchor].active = YES;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)setupZooming {
+    
 }
-*/
-
+-(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    
+}
 @end
